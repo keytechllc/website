@@ -23,36 +23,27 @@
             z-index: 1050; 
         }
 
-        /* STYLES for Service Cards (Matching Black/White Theme) */
+        /* STYLES for Service Cards (Matches latest design images) */
         .service-card {
-            background-color: #1a1a1a; /* Darker grey for the card background */
-            border: 3px solid #ffffff !important; /* White border for emphasis */
-            box-shadow: 0 0.5rem 1rem rgba(255, 255, 255, 0.15) !important; /* Subtle white shadow */
+            background-color: #2c2c2c; 
+            border: 3px solid #dc3545 !important; /* RED border */
+            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.5) !important; 
         }
         .service-card .card-title {
-            color: #ffffff !important; /* White title text */
+            color: #dc3545 !important; /* Red title text */
             font-weight: bold;
         }
         .service-card .list-unstyled li {
-            color: #ccc; /* Lighter grey for list items */
+            color: #ccc; 
         }
-        /* Style for the default "Request" buttons (White Outline) */
-        .btn-request {
-            border: 2px solid #fff;
-            color: #fff;
-        }
-        .btn-request:hover {
-            background-color: #fff;
-            color: #000;
-        }
-        /* Style for the RED "Emergency" button (Automotive) - Retained for urgency */
-        .btn-emergency-red {
-            background-color: #dc3545; /* Red */
+        /* Style for Request/Emergency buttons (Red Solid) */
+        .btn-request, .btn-emergency-red {
+            background-color: #dc3545;
             border-color: #dc3545;
             color: #fff;
             font-weight: 600;
         }
-        .btn-emergency-red:hover {
+        .btn-request:hover, .btn-emergency-red:hover {
             background-color: #c82333;
             border-color: #c82333;
         }
@@ -76,9 +67,9 @@
             <div class="collapse navbar-collapse" id="navMain">
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                     <li class="nav-item"><a class="nav-link active" aria-current="page" href="#home">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#services">Residential</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#services">Commercial</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#services">Automotive</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#residential">Residential</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#commercial">Commercial</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#automotive">Automotive</a></li>
                     <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
                     <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
                 </ul>
@@ -274,35 +265,64 @@
                 <div class="col-lg-6">
                     <h2 class="fw-bold">Get a Fast Quote</h2>
                     <p class="text-secondary">Tell us what you need and we’ll get right back to you.</p>
-                    <form class="row g-3">
+                    
+                    <form 
+                        id="quoteForm"
+                        action="https://formspree.io/f/xkgqlbon" 
+                        method="POST" 
+                        class="row g-3"
+                    >
+                        <input type="hidden" name="_subject" value="New Quote Request from Keytech Locksmith Website" />
+                        
                         <div class="col-md-6">
                             <label for="name" class="form-label">Name</label>
-                            <input type="text" class="form-control" id="name" placeholder="Your name" />
+                            <input type="text" class="form-control" id="name" name="Name" placeholder="Your name" required />
                         </div>
+                        
                         <div class="col-md-6">
-                            <label for="phone" class="form-label">Phone</label>
-                            <input type="tel" class="form-control" id="phone" placeholder="(555) 123-4567" />
+                            <label for="phone" class="form-label">Phone (10 digits required)</label>
+                            <input type="tel" class="form-control" id="phone" name="Phone Number" placeholder="(555) 123-4567" required />
+                            <div class="invalid-feedback" id="phone-feedback">Phone number must be exactly 10 digits (excluding symbols).</div>
                         </div>
+
+                        <div class="col-12">
+                            <label for="email" class="form-label">Your Email</label>
+                            <input type="email" class="form-control" id="email" name="Email" placeholder="your@email.com" required />
+                        </div>
+                        
                         <div class="col-12">
                             <label for="service" class="form-label">Service</label>
-                            <select id="service" class="form-select">
-                                <option selected>Choose...</option>
-                                <option>Residential</option>
-                                <option>Commercial</option>
-                                <option>Automotive</option>
-                                <option>Emergency Lockout</option>
+                            <select id="service" class="form-select" name="Service Requested" required>
+                                <option selected value="">Choose...</option>
+                                <option value="Residential">Residential</option>
+                                <option value="Commercial">Commercial</option>
+                                <option value="Automotive">Automotive</option>
+                                <option value="Emergency Lockout">Emergency Lockout</option>
                             </select>
                         </div>
+                        
                         <div class="col-12">
                             <label for="message" class="form-label">Details</label>
-                            <textarea id="message" class="form-control" rows="4" placeholder="Tell us about your issue (vehicle make/model, lock type, etc.)"></textarea>
+                            <textarea id="message" class="form-control" name="Details" rows="4" placeholder="Tell us about your issue (vehicle make/model, lock type, etc.)" required></textarea>
                         </div>
+                        
+                        <div class="col-12">
+                            <label class="form-label">Verification</label>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="_captcha" id="captchaCheck" required>
+                                <label class="form-check-label" for="captchaCheck">
+                                    I confirm I am human (required)
+                                </label>
+                            </div>
+                        </div>
+
                         <div class="col-12 d-grid d-sm-flex gap-2">
-                            <button type="button" class="btn btn-danger">Request Quote</button>
+                            <button type="submit" class="btn btn-danger">Request Quote</button>
                             <a href="tel:+15038545502" class="btn btn-outline-light">Or Call Now</a>
                         </div>
                     </form>
                 </div>
+                
                 <div class="col-lg-6">
                     <div class="p-4 bg-black border border-secondary rounded-4 h-100">
                         <h5 class="fw-semibold">Contact</h5>
@@ -316,26 +336,27 @@
                             <div class="col-6">
                                 <ul class="list-unstyled mb-0">
                                     <li class="mb-1"><span class="text-success me-2">•</span> <strong>Portland</strong></li>
-                                    <li class="mb-1"><span class="text-success me-2">•</span> <strong>Gresham</strong></li>
-                                    <li class="mb-1"><span class="text-success me-2">•</span> <strong>Troutdale</strong></li>
-                                    <li class="mb-1"><span class="text-success me-2">•</span> **Vancouver, WA**</li>
-                                    <li class="mb-1"><span class="text-success me-2">•</span> Camas</li>
+                                    <li class="mb-1"><span class="text-success me-2">•</span> <strong>Vancouver</strong></li>
+                                    <li class="mb-1"><span class="text-success me-2">•</span> Hazel Dell</li>
+                                    <li class="mb-1"><span class="text-success me-2">•</span> Salmon Creek</li>
+                                    <li class="mb-1"><span class="text-success me-2">•</span> Orchards</li>
                                     <li class="mb-1"><span class="text-success me-2">•</span> Mill Plain</li>
-                                    <li class="mb-1"><span class="text-success me-2">•</span> Milwaukie</li>
-                                    <li class="mb-1"><span class="text-success me-2">•</span> Happy Valley</li>
-                                    <li class="mb-1"><span class="text-success me-2">•</span> Oregon City</li>
+                                    <li class="mb-1"><span class="text-success me-2">•</span> Camas</li>
+                                    <li class="mb-1"><span class="text-success me-2">•</span> <strong>Gresham</strong></li>
+                                    <li class="mb-1"><span class="text-success me-2">•</span> Troutdale</li>
                                 </ul>
                             </div>
                             <div class="col-6">
                                 <ul class="list-unstyled mb-0">
-                                    <li class="mb-1"><span class="text-success me-2">•</span> Beaverton</li>
-                                    <li class="mb-1"><span class="text-success me-2">•</span> Tigard</li>
-                                    <li class="mb-1"><span class="text-success me-2">•</span> Tualatin</li>
+                                    <li class="mb-1"><span class="text-success me-2">•</span> Happy Valley</li>
+                                    <li class="mb-1"><span class="text-success me-2">•</span> Milwaukie</li>
                                     <li class="mb-1"><span class="text-success me-2">•</span> Lake Oswego</li>
+                                    <li class="mb-1"><span class="text-success me-2">•</span> Tualatin</li>
+                                    <li class="mb-1"><span class="text-success me-2">•</span> Tigard</li>
+                                    <li class="mb-1"><span class="text-success me-2">•</span> Beaverton</li>
                                     <li class="mb-1"><span class="text-success me-2">•</span> Aloha</li>
                                     <li class="mb-1"><span class="text-success me-2">•</span> Bethany</li>
-                                    <li class="mb-1"><span class="text-success me-2">•</span> Fairview</li>
-                                    <li class="mb-1"><span class="text-success me-2">•</span> Salmon Creek</li>
+                                    <li class="mb-1"><span class="text-success me-2">•</span> Oregon City</li>
                                 </ul>
                             </div>
                         </div>
@@ -362,10 +383,9 @@
         // Current year
         document.getElementById('yr').textContent = new Date().getFullYear();
 
-        // Image overrides via URL: ?logo=mylogo.png&home=hero2.jpg&index=alt.png
+        // Image overrides via URL (existing logic for placeholder images)
         (function () {
             const params = new URLSearchParams(location.search);
-            // UPDATE: Removed "images/" prefix from default paths
             const defaults = {
                 logo: 'logo.png',
                 home: 'home.png',
@@ -373,12 +393,27 @@
             };
             ['logo', 'home', 'index'].forEach(key => {
                 const override = params.get(key);
-                // UPDATE: Check for override path or use default filename (no prefix)
                 const path = override ? override : defaults[key];
                 const el = document.querySelector(`[data-img="${key}"]`);
                 if (el) el.src = path;
             });
         })();
+
+
+        // FIX: Phone Number Validation for exactly 10 digits
+        document.getElementById('quoteForm').addEventListener('submit', function(event) {
+            const phoneInput = document.getElementById('phone');
+            // Remove all non-digit characters (spaces, parentheses, hyphens, etc.) for a clean count
+            const cleanPhoneNumber = phoneInput.value.replace(/\D/g, ''); 
+            
+            // Check if the clean number is exactly 10 digits (Standard US phone number format)
+            if (cleanPhoneNumber.length !== 10) {
+                event.preventDefault(); // STOP the form from submitting
+                phoneInput.classList.add('is-invalid'); // Show Bootstrap error style
+            } else {
+                phoneInput.classList.remove('is-invalid'); // Remove class if valid
+            }
+        });
     </script>
 </body>
 </html>
